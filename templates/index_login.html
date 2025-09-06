@@ -96,17 +96,50 @@
                     <p class="login-subtitle">SRM University Portal</p>
                 </div>
 
-                <form id="login-form" class="login-form">
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error" id="email-error">Please enter a valid email address</div>
+                <form id="login-form" class="login-form" novalidate>
+                    <!-- Student Login Fields -->
+                    <div class="student-fields">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email">
+                            <div class="error" id="email-error">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password">
+                            <div class="error" id="password-error">Password must be at least 6 characters</div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                        <div class="error" id="password-error">Password must be at least 6 characters</div>
+                    <!-- Company Login Fields -->
+                    <div class="company-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" id="company-name" name="companyName">
+                            <div class="error" id="company-name-error">Please enter your company name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company-password">Password</label>
+                            <input type="password" id="company-password" name="companyPassword">
+                            <div class="error" id="company-password-error">Password must be at least 6 characters</div>
+                        </div>
+
+                        <!-- Additional fields for company registration -->
+                        <div class="company-register-fields" style="display: none;">
+                            <div class="form-group">
+                                <label for="company-description">Company Description</label>
+                                <textarea id="company-description" name="companyDescription" placeholder="Describe your company and what you do..." rows="3"></textarea>
+                                <div class="error" id="company-description-error">Please provide a company description</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company-website">Company Website</label>
+                                <input type="url" id="company-website" name="companyWebsite" placeholder="https://yourcompany.com">
+                                <div class="error" id="company-website-error">Please enter a valid website URL</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-actions">

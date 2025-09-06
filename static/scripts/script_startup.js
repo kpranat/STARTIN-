@@ -185,7 +185,7 @@ jobForm.addEventListener('submit', (e) => {
         });
 
         // Show success message
-        alert('Job posted successfully! ðŸŽ‰');
+        alert('Job posted successfully! 🎉');
 
         // Reset form
         jobForm.reset();
@@ -226,7 +226,7 @@ function displayApplicants() {
             <div class="applicant-name">${applicant.name}</div>
             <div class="applicant-info">
                 ${applicant.school}<br>
-                ${applicant.major} â€¢ ${applicant.year}<br>
+                ${applicant.major} • ${applicant.year}<br>
                 GPA: ${applicant.gpa}
             </div>
         `;
@@ -267,12 +267,12 @@ function showApplicantProfile(index) {
 }
 
 function contactApplicant(email) {
-    alert(`Opening email to ${email}... ðŸ"§`);
+    alert(`Opening email to ${email}... 📧`);
     // In real app, this would open the default email client
 }
 
 function scheduleInterview(name) {
-    alert(`Interview scheduling system for ${name} would open here! ðŸ"…`);
+    alert(`Interview scheduling system for ${name} would open here! 📅`);
     // In real app, this would open a calendar/scheduling interface
 }
 

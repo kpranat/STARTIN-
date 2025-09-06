@@ -268,10 +268,13 @@ p {
 
 .login-form {
     width: 100%;
+    position: relative;
+    z-index: 2;
 }
 
 .form-group {
     margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .form-group label {
@@ -281,7 +284,8 @@ p {
     font-weight: bold;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 1rem;
     border: 2px solid var(--silver-dark);
@@ -289,13 +293,27 @@ p {
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
     font-size: 1rem;
+    font-family: inherit;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
-.form-group input:focus {
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--silver-light);
     box-shadow: 0 0 15px var(--glow-color);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--silver-dark);
 }
 
 .error {
@@ -309,16 +327,16 @@ p {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
 }
 
+/* FIXED BUTTON STYLES - This was the issue! */
 .btn {
     flex: 1;
     background: linear-gradient(45deg, #222222, #111111);
     color: var(--text-primary);
-    border: 2px solid transparent;
-    background-image: var(--gradient-border);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
+    border: none;
     padding: 1rem 2rem;
     border-radius: 15px;
     cursor: pointer;
@@ -327,19 +345,47 @@ p {
     transition: all 0.3s ease;
     text-decoration: none;
     text-align: center;
+    display: inline-block;
+    position: relative;
+    z-index: 5;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
     box-shadow: 0 0 20px var(--glow-color);
     transform: translateY(-2px);
 }
 
+.btn:active:not(:disabled) {
+    transform: translateY(0px);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    pointer-events: none;
+}
+
 .btn-primary {
     background: linear-gradient(45deg, #4ade80, #22c55e);
+    border: 2px solid #22c55e;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(45deg, #22c55e, #16a34a);
 }
 
 .btn-secondary {
     background: linear-gradient(45deg, #64748b, #475569);
+    border: 2px solid #475569;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: linear-gradient(45deg, #475569, #334155);
 }
 
 .form-footer {
@@ -356,6 +402,30 @@ p {
 .forgot-password:hover {
     color: var(--text-primary);
     text-shadow: 0 0 10px var(--glow-color);
+}
+
+/* ================================
+   FIELD VISIBILITY - ENHANCED
+================================ */
+.student-fields,
+.company-fields {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.student-fields[style*="display: none"],
+.company-fields[style*="display: none"] {
+    display: none !important;
+}
+
+.company-register-fields {
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.company-register-fields[style*="display: none"] {
+    display: none !important;
 }
 
 /* ================================
@@ -382,5 +452,36 @@ p {
 
     .form-actions {
         flex-direction: column;
+        gap: 0.5rem;
     }
+
+    .btn {
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 1rem;
+    }
+
+    .nav-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+}
+
+/* ================================
+   DEBUG HELPER (Remove in production)
+================================ */
+.btn:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
 }
