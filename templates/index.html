@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCorp - Company Profile</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">RecruitHub</div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" data-page="profile">Profile</a></li>
+            <li><a href="#" class="nav-link" data-page="jobs">Post Job</a></li>
+            <li><a href="#" class="nav-link" data-page="applicants">Applicants</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Container -->
+<div class="main-container">
+    <!-- Company Profile Page -->
+    <div id="profile-page" class="page">
+        <div class="company-header card">
+            <div class="card-inner">
+                <h1>TechCorp Industries</h1>
+                <p class="company-description">
+                    Leading innovation in software development and digital transformation.
+                    We're building the future of technology, one brilliant mind at a time.
+                </p>
+                <a href="https://techcorp.example.com" target="_blank" class="website-link">
+                    🌐 Visit Our Website
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <h2>Previous Job Listings</h2>
+                <div class="job-grid" id="previous-jobs">
+                    <!-- Jobs will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Posting Page -->
+    <div id="jobs-page" class="page" style="display: none;">
+        <div class="card">
+            <div class="card-inner">
+                <h2>Post a New Job</h2>
+                <form id="job-form">
+                    <div class="form-group">
+                        <label for="job-type">Job Title/Type</label>
+                        <input type="text" id="job-type" name="jobType" placeholder="e.g., Software Engineer Intern">
+                        <div class="error" id="job-type-error">Job type is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stipend">Stipend (per month)</label>
+                        <input type="text" id="stipend" name="stipend" placeholder="e.g., $2000">
+                        <div class="error" id="stipend-error">Stipend is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Job Description</label>
+                        <textarea id="description" name="description" placeholder="Describe the role, responsibilities, and what the candidate will learn..."></textarea>
+                        <div class="error" id="description-error">Job description is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requirements">Requirements</label>
+                        <textarea id="requirements" name="requirements" placeholder="List the skills, qualifications, and experience needed..."></textarea>
+                        <div class="error" id="requirements-error">Requirements are required</div>
+                    </div>
+
+                    <button type="submit" class="btn">Post Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Applicants Page -->
+    <div id="applicants-page" class="page" style="display: none;">
+        <div class="card">
+            <div class="card-inner">
+                <h2>Job Applicants</h2>
+                <div class="applicant-grid" id="applicants-list">
+                    <!-- Applicants will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Applicant Profile -->
+<div id="applicant-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body">
+            <!-- Applicant details will be populated here -->
+        </div>
+    </div>
+</div>
+
+<script src="../static/scripts/script.js"></script>
+</body>
+</html>
