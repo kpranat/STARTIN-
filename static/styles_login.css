@@ -1,0 +1,386 @@
+/* ================================
+   GLOBAL STYLES & VARIABLES
+================================ */
+:root {
+    --bg-black: #000000;
+    --silver-light: #e8e8e8;
+    --silver-dark: #a0a0a0;
+    --gradient-border: linear-gradient(45deg, #222222, #111111, #222222);
+    --gradient-hover: linear-gradient(45deg, #222222, #1a1a1a, #222222);
+    --text-primary: #ffffff;
+    --text-secondary: #c0c0c0;
+    --border-radius: 20px;
+    --glow-color: rgba(255, 255, 255, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-black);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ================================
+   PAGE SYSTEM
+================================ */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* ================================
+   NAVIGATION
+================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid transparent;
+    background-image: var(--gradient-border);
+    background-clip: padding-box;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.btn-back {
+    background: linear-gradient(45deg, #222222, #111111);
+    color: var(--text-primary);
+    border: 2px solid transparent;
+    background-image: var(--gradient-border);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+/* ================================
+   MAIN CONTAINER
+================================ */
+.main-container {
+    margin-top: 100px;
+    padding: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card {
+    background: var(--bg-black);
+    border: 2px solid transparent;
+    background-image: var(--gradient-border);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px var(--glow-color);
+}
+
+.card-inner {
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================
+   TYPOGRAPHY
+================================ */
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* ================================
+   UNIVERSITY SELECTION
+================================ */
+.company-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.company-description {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.university-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.university-card {
+    background: var(--bg-black);
+    border: 2px solid transparent;
+    background-image: var(--gradient-border);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.university-card:not(.coming-soon):hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px var(--glow-color);
+}
+
+.university-card.coming-soon {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.university-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.university-status {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.university-status.available {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+/* ================================
+   ROLE SELECTION
+================================ */
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.role-card {
+    background: var(--bg-black);
+    border: 2px solid transparent;
+    background-image: var(--gradient-border);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.role-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px var(--glow-color);
+}
+
+.role-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.role-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.role-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* ================================
+   LOGIN PAGE
+================================ */
+.login-card {
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-subtitle {
+    color: var(--silver-light);
+    font-size: 1.1rem;
+}
+
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--silver-light);
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--silver-dark);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--silver-light);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    flex: 1;
+    background: linear-gradient(45deg, #222222, #111111);
+    color: var(--text-primary);
+    border: 2px solid transparent;
+    background-image: var(--gradient-border);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn:hover {
+    box-shadow: 0 0 20px var(--glow-color);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #4ade80, #22c55e);
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #64748b, #475569);
+}
+
+.form-footer {
+    text-align: center;
+}
+
+.forgot-password {
+    color: var(--silver-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .university-grid,
+    .role-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}

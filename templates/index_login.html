@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Login Portal</title>
+    <link rel="stylesheet" href="../static/styles_login.css">
+</head>
+<body>
+<!-- University Selection Page -->
+<div id="university-page" class="page active">
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">EduPortal</div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="company-header">
+                    <h1>Choose Your University</h1>
+                    <p class="company-description">Select your institution to access the portal</p>
+                </div>
+
+                <div class="university-grid">
+                    <div class="university-card" data-university="srm">
+                        <div class="university-name">SRM University</div>
+                        <div class="university-status available">Available</div>
+                    </div>
+
+                    <div class="university-card coming-soon" data-university="vit">
+                        <div class="university-name">VIT University</div>
+                        <div class="university-status">Coming Soon</div>
+                    </div>
+
+                    <div class="university-card coming-soon" data-university="bits">
+                        <div class="university-name">BITS Pilani</div>
+                        <div class="university-status">Coming Soon</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Role Selection Page -->
+<div id="role-page" class="page">
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">EduPortal</div>
+            <button class="btn-back" onclick="goBack()">← Back</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="company-header">
+                    <h1>SRM University</h1>
+                    <p class="company-description">Choose your role to continue</p>
+                </div>
+
+                <div class="role-grid">
+                    <div class="role-card" data-role="student">
+                        <div class="role-icon">🎓</div>
+                        <div class="role-name">Student</div>
+                        <div class="role-description">Access student portal and resources</div>
+                    </div>
+
+                    <div class="role-card" data-role="company">
+                        <div class="role-icon">🏢</div>
+                        <div class="role-name">Company</div>
+                        <div class="role-description">Post jobs and manage recruitment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Page -->
+<div id="login-page" class="page">
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">EduPortal</div>
+            <button class="btn-back" onclick="goBack()">← Back</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="card login-card">
+            <div class="card-inner">
+                <div class="login-header">
+                    <h2 id="login-title">Student Login</h2>
+                    <p class="login-subtitle">SRM University Portal</p>
+                </div>
+
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error" id="email-error">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <div class="error" id="password-error">Password must be at least 6 characters</div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
+                        <button type="button" class="btn btn-secondary" id="register-btn">Create Account</button>
+                    </div>
+
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../static/scripts/script_login.js"></script>
+</body>
+</html>
