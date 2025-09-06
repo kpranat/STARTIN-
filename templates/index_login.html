@@ -131,14 +131,26 @@
                     </div>
                     <div id="student-login-fields">
                         <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
-                            <div class="error" id="email-error">Please enter a valid email address</div>
+                            <label for="rollNumber">College Roll Number</label>
+                            <input type="text" id="rollNumber" name="rollNumber" placeholder="e.g., RA2111003010001" required>
+                            <div class="error" id="rollNumber-error">Please enter a valid roll number</div>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" id="password" name="password" required>
                             <div class="error" id="password-error">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                    <div id="student-register-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="rollNumberReg">College Roll Number</label>
+                            <input type="text" id="rollNumberReg" name="rollNumberReg" placeholder="e.g., RA2111003010001" required>
+                            <div class="error" id="rollNumberReg-error">Please enter a valid roll number</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordStudentReg">Password</label>
+                            <input type="password" id="passwordStudentReg" name="passwordStudentReg" required>
+                            <div class="error" id="passwordStudentReg-error">Password must be at least 6 characters</div>
                         </div>
                     </div>
                     <div class="form-actions">

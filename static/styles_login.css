@@ -151,27 +151,14 @@ p {
 
 .company-description {
     font-size: 1.1rem;
-    max-width: 650px;
+    max-width: 600px;
     margin: 0 auto 2rem;
     color: var(--text-secondary);
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid var(--silver-dark);
+    background: rgba(255,255,255,0.03);
     border-radius: 10px;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     font-weight: 500;
-    line-height: 1.6;
-    transition: all 0.3s ease;
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-
-.company-description:hover {
-    border-color: var(--silver-light);
-    box-shadow: 0 0 20px var(--glow-color);
-    background: rgba(255, 255, 255, 0.08);
 }
 
 .university-grid {
@@ -409,11 +396,5 @@ p {
 
     .form-actions {
         flex-direction: column;
-    }
-
-    .company-description {
-        max-width: 90%;
-        padding: 1.2rem 1.5rem;
-        min-height: 100px;
     }
 }

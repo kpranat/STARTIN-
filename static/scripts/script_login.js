@@ -68,6 +68,8 @@ function updateLoginPage() {
     // Show/hide fields based on role and mode
     document.getElementById('student-login-fields').style.display =
         (selectedRole === 'student' && isLoginMode) ? 'block' : 'none';
+    document.getElementById('student-register-fields').style.display =
+        (selectedRole === 'student' && !isLoginMode) ? 'block' : 'none';
     document.getElementById('company-login-fields').style.display =
         (selectedRole === 'company' && isLoginMode) ? 'block' : 'none';
     document.getElementById('company-register-fields').style.display =
@@ -90,29 +92,52 @@ function updateFormMode() {
 }
 
 // Form validation
-function validateForm(email, password) {
+function validateForm() {
     let isValid = true;
 
     if (selectedRole === 'student') {
-        // Email validation
-        const emailError = document.getElementById('email-error');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (isLoginMode) {
+            // Student login validation
+            const rollNumber = document.getElementById('rollNumber').value;
+            const password = document.getElementById('password').value;
+            const rollNumberError = document.getElementById('rollNumber-error');
+            const passwordError = document.getElementById('password-error');
 
-        if (!email || !emailRegex.test(email)) {
-            emailError.style.display = 'block';
-            isValid = false;
+            if (!rollNumber || rollNumber.length < 8) {
+                rollNumberError.style.display = 'block';
+                rollNumberError.textContent = 'Please enter a valid roll number';
+                isValid = false;
+            } else {
+                rollNumberError.style.display = 'none';
+            }
+
+            if (!password || password.length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
         } else {
-            emailError.style.display = 'none';
-        }
+            // Student registration validation
+            const rollNumberReg = document.getElementById('rollNumberReg').value;
+            const passwordReg = document.getElementById('passwordStudentReg').value;
+            const rollNumberRegError = document.getElementById('rollNumberReg-error');
+            const passwordRegError = document.getElementById('passwordStudentReg-error');
 
-        // Password validation
-        const passwordError = document.getElementById('password-error');
+            if (!rollNumberReg || rollNumberReg.length < 8) {
+                rollNumberRegError.style.display = 'block';
+                rollNumberRegError.textContent = 'Please enter a valid roll number';
+                isValid = false;
+            } else {
+                rollNumberRegError.style.display = 'none';
+            }
 
-        if (!password || password.length < 6) {
-            passwordError.style.display = 'block';
-            isValid = false;
-        } else {
-            passwordError.style.display = 'none';
+            if (!passwordReg || passwordReg.length < 6) {
+                passwordRegError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordRegError.style.display = 'none';
+            }
         }
     } else if (selectedRole === 'company') {
         if (isLoginMode) {
@@ -172,29 +197,27 @@ function initializeLoginForm() {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        if (selectedRole === 'student') {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            if (validateForm(email, password)) {
+        if (validateForm()) {
+            if (selectedRole === 'student') {
                 if (isLoginMode) {
-                    handleLogin(email, password);
+                    const rollNumber = document.getElementById('rollNumber').value;
+                    const password = document.getElementById('password').value;
+                    handleStudentLogin(rollNumber, password);
                 } else {
-                    handleRegister(email, password);
+                    const rollNumber = document.getElementById('rollNumberReg').value;
+                    const password = document.getElementById('passwordStudentReg').value;
+                    handleStudentRegister(rollNumber, password);
                 }
-            }
-        } else if (selectedRole === 'company') {
-            if (isLoginMode) {
-                const companyName = document.getElementById('companyName').value;
-                const passwordCompany = document.getElementById('password-company').value;
-                if (validateForm()) {
+            } else if (selectedRole === 'company') {
+                if (isLoginMode) {
+                    const companyName = document.getElementById('companyName').value;
+                    const passwordCompany = document.getElementById('password-company').value;
                     handleCompanyLogin(companyName, passwordCompany);
-                }
-            } else {
-                const companyNameReg = document.getElementById('companyNameReg').value;
-                const passwordReg = document.getElementById('passwordReg').value;
-                const companyDesc = document.getElementById('companyDesc').value;
-                const companyWebsite = document.getElementById('companyWebsite').value;
-                if (validateForm()) {
+                } else {
+                    const companyNameReg = document.getElementById('companyNameReg').value;
+                    const passwordReg = document.getElementById('passwordReg').value;
+                    const companyDesc = document.getElementById('companyDesc').value;
+                    const companyWebsite = document.getElementById('companyWebsite').value;
                     handleCompanyRegister(companyNameReg, passwordReg, companyDesc, companyWebsite);
                 }
             }
@@ -202,42 +225,12 @@ function initializeLoginForm() {
     });
 }
 
-// Update login page based on selected role
-function updateLoginPage() {
-    const loginTitle = document.getElementById('login-title');
-    const roleText = selectedRole === 'student' ? 'Student' : 'Company';
-    loginTitle.textContent = roleText + (isLoginMode ? ' Login' : ' Registration');
-
-    // Show/hide fields based on role and mode
-    document.getElementById('student-login-fields').style.display =
-        (selectedRole === 'student' && isLoginMode) ? 'block' : 'none';
-    document.getElementById('company-login-fields').style.display =
-        (selectedRole === 'company' && isLoginMode) ? 'block' : 'none';
-    document.getElementById('company-register-fields').style.display =
-        (selectedRole === 'company' && !isLoginMode) ? 'block' : 'none';
-}
-
-// Toggle between login and register mode
-function updateFormMode() {
-    const loginBtn = document.getElementById('login-btn');
-    const registerBtn = document.getElementById('register-btn');
-
-    if (isLoginMode) {
-        loginBtn.textContent = 'Login';
-        registerBtn.textContent = 'Create Account';
-    } else {
-        loginBtn.textContent = 'Create Account';
-        registerBtn.textContent = 'Back to Login';
-    }
-    updateLoginPage();
-}
-
-// Handle login process
-function handleLogin(email, password) {
-    console.log('Login attempt:', {
+// Handle student login process
+function handleStudentLogin(rollNumber, password) {
+    console.log('Student login attempt:', {
         university: selectedUniversity,
         role: selectedRole,
-        email: email
+        rollNumber: rollNumber
     });
 
     const loginBtn = document.getElementById('login-btn');
@@ -248,71 +241,6 @@ function handleLogin(email, password) {
     loginBtn.disabled = true;
 
     // Simulate API call
-    setTimeout(() => {
-        loginBtn.textContent = originalText;
-        loginBtn.disabled = false;
-
-        // Redirect based on role
-        if (selectedRole === 'student') {
-            window.location.href = 'index_student.html';
-        } else if (selectedRole === 'company') {
-            window.location.href = 'index_startup.html';
-        }
-    }, 1500);
-}
-
-// Handle registration process
-function handleRegister(email, password) {
-    console.log('Registration attempt:', {
-        university: selectedUniversity,
-        role: selectedRole,
-        email: email
-    });
-
-    const loginBtn = document.getElementById('login-btn');
-    const originalText = loginBtn.textContent;
-
-    // Show loading state
-    loginBtn.textContent = 'Creating Account...';
-    loginBtn.disabled = true;
-
-    // Simulate API call
-    setTimeout(() => {
-        loginBtn.textContent = originalText;
-        loginBtn.disabled = false;
-        alert('Account created successfully! (This is a demo)');
-
-        // Switch back to login mode
-        isLoginMode = true;
-        updateFormMode();
-
-        // Clear form
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-    }, 1500);
-}
-
-// Handle company login process
-function handleCompanyLogin(companyName, password) {
-    const loginBtn = document.getElementById('login-btn');
-    const originalText = loginBtn.textContent;
-    loginBtn.textContent = 'Logging in...';
-    loginBtn.disabled = true;
-
-    setTimeout(() => {
-        loginBtn.textContent = originalText;
-        loginBtn.disabled = false;
-        window.location.href = 'index_startup.html';
-    }, 1500);
-}
-
-// Handle company registration process
-function handleCompanyRegister(companyName, password, desc, website) {
-    const loginBtn = document.getElementById('login-btn');
-    const originalText = loginBtn.textContent;
-    loginBtn.textContent = 'Creating Account...';
-    loginBtn.disabled = true;
-
     setTimeout(() => {
         loginBtn.textContent = originalText;
         loginBtn.disabled = false;
@@ -327,6 +255,53 @@ function handleCompanyRegister(companyName, password, desc, website) {
         document.getElementById('companyDesc').value = '';
         document.getElementById('companyWebsite').value = '';
     }, 1500);
+}
+
+// Add visual feedback effects
+function addVisualEffects() {
+    const clickableElements = document.querySelectorAll('.university-card:not(.coming-soon), .role-card');
+
+    clickableElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+        });
+
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    // Add ripple effect to buttons
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+            `;
+
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
 }
 
 // Add visual feedback effects
@@ -394,3 +369,70 @@ const rippleCSS = `
 const style = document.createElement('style');
 style.textContent = rippleCSS;
 document.head.appendChild(style);
+
+// Handle student registration process
+function handleStudentRegister(rollNumber, password) {
+    console.log('Student registration attempt:', {
+        university: selectedUniversity,
+        role: selectedRole,
+        rollNumber: rollNumber
+    });
+
+    const loginBtn = document.getElementById('login-btn');
+    const originalText = loginBtn.textContent;
+
+    // Show loading state
+    loginBtn.textContent = 'Creating Account...';
+    loginBtn.disabled = true;
+
+    // Simulate API call
+    setTimeout(() => {
+        loginBtn.textContent = originalText;
+        loginBtn.disabled = false;
+        alert('Student account created successfully! (This is a demo)');
+
+        // Switch back to login mode
+        isLoginMode = true;
+        updateFormMode();
+
+        // Clear form
+        document.getElementById('rollNumberReg').value = '';
+        document.getElementById('passwordStudentReg').value = '';
+    }, 1500);
+}
+
+// Handle company login process
+function handleCompanyLogin(companyName, password) {
+    console.log('Company login attempt:', {
+        university: selectedUniversity,
+        role: selectedRole,
+        companyName: companyName
+    });
+
+    const loginBtn = document.getElementById('login-btn');
+    const originalText = loginBtn.textContent;
+    loginBtn.textContent = 'Logging in...';
+    loginBtn.disabled = true;
+
+    setTimeout(() => {
+        loginBtn.textContent = originalText;
+        loginBtn.disabled = false;
+        window.location.href = 'index_startup.html';
+    }, 1500);
+}
+
+// Handle company registration process
+function handleCompanyRegister(companyName, password, desc, website) {
+    console.log('Company registration attempt:', {
+        university: selectedUniversity,
+        role: selectedRole,
+        companyName: companyName
+    });
+
+    const loginBtn = document.getElementById('login-btn');
+    const originalText = loginBtn.textContent;
+    loginBtn.textContent = 'Creating Account...';
+    loginBtn.disabled = true;
+
+    setTimeout(() => {
+        loginBtn.textContent = originalText })}
