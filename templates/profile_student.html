@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - STARTIN'</title>
+    <link rel="stylesheet" href="../static/styles_student.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="nav-brand">STARTIN'</div>
+    <div class="nav-links">
+        <a href="index_student.html">Home</a>
+        <a href="index_student.html#projects">Projects</a>
+        <a href="index_student.html#internships">Internships</a>
+        <a href="profile_student.html" class="active">Profile</a>
+    </div>
+</nav>
+
+<main>
+    <div class="profile-form-container">
+        <h1>Student Profile</h1>
+        <form id="studentProfileForm" class="profile-form">
+            <div class="form-group">
+                <label for="studentName">Student Name*</label>
+                <input type="text" id="studentName" name="studentName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rollNumber">College Roll Number*</label>
+                <input type="text" id="rollNumber" name="rollNumber" required>
+            </div>
+
+            <div class="form-group">
+                <label for="stuId">STU Unique ID*</label>
+                <input type="text" id="stuId" name="stuId" required>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutMe">About Me</label>
+                <textarea id="aboutMe" name="aboutMe" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="skillset">Skillset*</label>
+                <div class="tags-input-container">
+                    <input type="text" id="skillset" name="skillset" placeholder="Type skills and press Enter or comma">
+                    <div class="tags-container" id="tagsContainer"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="resume">Resume*</label>
+                <div class="file-upload">
+                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                    <div class="file-upload-info">Supported formats: PDF, DOC, DOCX</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="github">GitHub Profile</label>
+                <input type="url" id="github" name="github" placeholder="https://github.com/username">
+            </div>
+
+            <div class="form-group">
+                <label for="linkedin">LinkedIn Profile</label>
+                <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username">
+            </div>
+
+            <div class="form-group">
+                <label for="portfolio">Portfolio Website</label>
+                <input type="url" id="portfolio" name="portfolio" placeholder="https://yourportfolio.com">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Save Profile</button>
+                <button type="reset" class="btn-secondary">Reset Form</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script src="../static/scripts/profile_student.js"></script>
+</body>
+</html>
