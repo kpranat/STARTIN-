@@ -151,8 +151,27 @@ p {
 
 .company-description {
     font-size: 1.1rem;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto 2rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--silver-dark);
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.company-description:hover {
+    border-color: var(--silver-light);
+    box-shadow: 0 0 20px var(--glow-color);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .university-grid {
@@ -281,7 +300,8 @@ p {
     font-weight: bold;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 1rem;
     border: 2px solid var(--silver-dark);
@@ -290,9 +310,16 @@ p {
     color: var(--text-primary);
     font-size: 1rem;
     transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-group input:focus {
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--silver-light);
     box-shadow: 0 0 15px var(--glow-color);
@@ -382,5 +409,11 @@ p {
 
     .form-actions {
         flex-direction: column;
+    }
+
+    .company-description {
+        max-width: 90%;
+        padding: 1.2rem 1.5rem;
+        min-height: 100px;
     }
 }
