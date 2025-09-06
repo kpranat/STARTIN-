@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechCorp - Company Profile</title>
-    <link rel="stylesheet" href="{{url_for('static',filename = 'styles_startup.css')}}">
+    <link rel="stylesheet" href="../static/styles_startup.css">
 </head>
 <body>
 <!-- Navigation -->
@@ -52,7 +52,7 @@
         <div class="card">
             <div class="card-inner">
                 <h2>Post a New Job</h2>
-                <form method = "POST" id="job-form">
+                <form id="job-form">
                     <div class="form-group">
                         <label for="job-type">Job Title/Type</label>
                         <input type="text" id="job-type" name="jobType" placeholder="e.g., Software Engineer Intern">
@@ -106,6 +106,6 @@
     </div>
 </div>
 
-<script src="{{url_for('static',filename='scripts/script_startup.js')}}"></script>
+<script src="../static/scripts/script_startup.js"></script>
 </body>
 </html>

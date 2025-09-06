@@ -153,12 +153,6 @@ p {
     font-size: 1.1rem;
     max-width: 600px;
     margin: 0 auto 2rem;
-    color: var(--text-secondary);
-    background: rgba(255,255,255,0.03);
-    border-radius: 10px;
-    padding: 1rem 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    font-weight: 500;
 }
 
 .university-grid {
@@ -287,8 +281,7 @@ p {
     font-weight: bold;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group input {
     width: 100%;
     padding: 1rem;
     border: 2px solid var(--silver-dark);
@@ -297,16 +290,9 @@ p {
     color: var(--text-primary);
     font-size: 1rem;
     transition: all 0.3s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-group textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
+.form-group input:focus {
     outline: none;
     border-color: var(--silver-light);
     box-shadow: 0 0 15px var(--glow-color);

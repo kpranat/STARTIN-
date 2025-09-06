@@ -11,7 +11,7 @@
 <div id="university-page" class="page active">
     <div class="navbar">
         <div class="nav-container">
-            <div class="logo">EduPortal</div>
+            <div class="logo">STARTIN'</div>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
 <div id="role-page" class="page">
     <div class="navbar">
         <div class="nav-container">
-            <div class="logo">EduPortal</div>
+            <div class="logo">STARTIN'</div>
             <button class="btn-back" onclick="goBack()">← Back</button>
         </div>
     </div>
@@ -83,7 +83,7 @@
 <div id="login-page" class="page">
     <div class="navbar">
         <div class="nav-container">
-            <div class="logo">EduPortal</div>
+            <div class="logo">STARTIN'</div>
             <button class="btn-back" onclick="goBack()">← Back</button>
         </div>
     </div>
@@ -97,62 +97,18 @@
                 </div>
 
                 <form id="login-form" class="login-form">
-                    <div id="company-login-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="companyName">Company Name</label>
-                            <input type="text" id="companyName" name="companyName" required>
-                            <div class="error" id="companyName-error">Please enter your company name</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password-company">Password</label>
-                            <input type="password" id="password-company" name="password-company" required>
-                            <div class="error" id="password-company-error">Password must be at least 6 characters</div>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error" id="email-error">Please enter a valid email address</div>
                     </div>
-                    <div id="company-register-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="companyNameReg">Company Name</label>
-                            <input type="text" id="companyNameReg" name="companyNameReg" required>
-                            <div class="error" id="companyNameReg-error">Please enter your company name</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordReg">Password</label>
-                            <input type="password" id="passwordReg" name="passwordReg" required>
-                            <div class="error" id="passwordReg-error">Password must be at least 6 characters</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="companyDesc">Company Description</label>
-                            <textarea id="companyDesc" name="companyDesc" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="companyWebsite">Website Link</label>
-                            <input type="url" id="companyWebsite" name="companyWebsite" placeholder="https://yourcompany.com">
-                        </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <div class="error" id="password-error">Password must be at least 6 characters</div>
                     </div>
-                    <div id="student-login-fields">
-                        <div class="form-group">
-                            <label for="rollNumber">College Roll Number</label>
-                            <input type="text" id="rollNumber" name="rollNumber" placeholder="e.g., RA2111003010001" required>
-                            <div class="error" id="rollNumber-error">Please enter a valid roll number</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required>
-                            <div class="error" id="password-error">Password must be at least 6 characters</div>
-                        </div>
-                    </div>
-                    <div id="student-register-fields" style="display: none;">
-                        <div class="form-group">
-                            <label for="rollNumberReg">College Roll Number</label>
-                            <input type="text" id="rollNumberReg" name="rollNumberReg" placeholder="e.g., RA2111003010001" required>
-                            <div class="error" id="rollNumberReg-error">Please enter a valid roll number</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordStudentReg">Password</label>
-                            <input type="password" id="passwordStudentReg" name="passwordStudentReg" required>
-                            <div class="error" id="passwordStudentReg-error">Password must be at least 6 characters</div>
-                        </div>
-                    </div>
+
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
                         <button type="button" class="btn btn-secondary" id="register-btn">Create Account</button>

@@ -27,57 +27,57 @@ const previousJobs = [
 // Sample applicant data
 const applicants = [
     {
-        name: "Alex Chen",
-        email: "alex.chen@university.edu",
-        school: "Stanford University",
+        name: "Lehan Vats ",
+        email: "lv8460@srmist.edu.in",
+        school: "SRM University",
         major: "Computer Science",
-        year: "Junior",
-        gpa: "3.8",
+        year: "2nd",
+        gpa: "9.33",
         skills: ["JavaScript", "Python", "React", "Node.js"]
     },
     {
-        name: "Sarah Johnson",
-        email: "sarah.j@college.edu",
-        school: "MIT",
+        name: "Pranat Kheria",
+        email: "pk9834@srmist.edu.in",
+        school: "SRM University",
         major: "Data Science",
-        year: "Senior",
-        gpa: "3.9",
+        year: "2nd",
+        gpa: "9.92",
         skills: ["Python", "R", "Machine Learning", "SQL"]
     },
     {
-        name: "Marcus Rodriguez",
-        email: "marcus.r@tech.edu",
-        school: "Georgia Tech",
+        name: "Aadi Savan Vinod",
+        email: "av5342@srmist.edu.in",
+        school: "SRM University",
         major: "Software Engineering",
-        year: "Sophomore",
-        gpa: "3.7",
+        year: "2nd",
+        gpa: "9.12",
         skills: ["Java", "C++", "Algorithms", "System Design"]
     },
     {
-        name: "Emily Watson",
-        email: "emily.watson@uni.edu",
-        school: "UC Berkeley",
+        name: "Viva Baranwal",
+        email: "vb1234@srmist.edu.in",
+        school: "SRM University",
         major: "Computer Science",
-        year: "Junior",
-        gpa: "3.85",
+        year: "2nd",
+        gpa: "9.4",
         skills: ["React", "Vue.js", "TypeScript", "AWS"]
     },
     {
-        name: "David Kim",
-        email: "david.kim@college.edu",
-        school: "Carnegie Mellon",
+        name: "Example Man",
+        email: "example.man@college.edu",
+        school: "SRM University",
         major: "Artificial Intelligence",
-        year: "Senior",
-        gpa: "3.9",
+        year: "4th",
+        gpa: "10",
         skills: ["TensorFlow", "PyTorch", "Deep Learning", "NLP"]
     },
     {
-        name: "Lisa Park",
-        email: "lisa.park@university.edu",
-        school: "Harvard University",
+        name: "Example Woman",
+        email: "example.woman@university.edu",
+        school: "SRM University",
         major: "Applied Mathematics",
-        year: "Junior",
-        gpa: "3.8",
+        year: "3rd",
+        gpa: "8.8",
         skills: ["MATLAB", "Python", "Statistics", "Data Analysis"]
     }
 ];
