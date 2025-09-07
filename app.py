@@ -4,18 +4,28 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'static/uploads/resumes'
-ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
-
-
+# Get the absolute path of the directory where this file is located
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-# Database setup
-app.config["SECRET_KEY"] = "YOUR-SECRET-KEY"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///STARTIN_.db"
+# Allowed file extensions for resumes
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
+
+# --- Configuration ---
+# Set a strong, random secret key
+app.config["SECRET_KEY"] = "replace-this-with-a-real-secret-key-please"
+
+# Configure the database path to be in an 'instance' folder
+instance_path = os.path.join(basedir, 'instance')
+os.makedirs(instance_path, exist_ok=True)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(instance_path, 'STARTIN_.db')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Configure the upload folder for resumes
+upload_folder_path = os.path.join(basedir, 'static', 'uploads', 'resumes')
+os.makedirs(upload_folder_path, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = upload_folder_path
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
