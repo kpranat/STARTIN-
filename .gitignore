@@ -1,9 +1,9 @@
 # Python cache
-_pycache_/
+__pycache__
 *.pyc
 
 # Instance Folder (for your database)
-/instance/
+/instance/STARTIN_.db/
 
 # Uploads
 /static/uploads/
