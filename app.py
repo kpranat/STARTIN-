@@ -140,10 +140,10 @@ def profile():
         resume_path = profile.resume if profile else None  # keep existing if not uploading new
         if resume_file and allowed_file(resume_file.filename):
             filename = secure_filename(f"{student_id}_{resume_file.filename}")
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            resume_file.save(file_path)
-            resume_path = file_path.replace("static/", "/static/")  # path usable in HTML
+            # The UPLOAD_FOLDER is already an absolute path, so we save directly to it
+            resume_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # Store a path that is relative to the 'static' directory for use with url_for
+            resume_path = os.path.join('uploads', 'resumes', filename)
 
         if profile:
             profile.name = name_

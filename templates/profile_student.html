@@ -62,7 +62,7 @@
             <label for="resume">Upload Resume (PDF/DOC/DOCX)</label>
             <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
             {% if profile and profile.resume %}
-                <p>Current Resume: <a href="{{ profile.resume }}" target="_blank">View</a></p>
+                <p>Current Resume: <a href="{{ url_for('static', filename=profile.resume) }}" target="_blank">View</a></p>
             {% endif %}
         </div>
 
