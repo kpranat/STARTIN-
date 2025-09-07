@@ -64,7 +64,8 @@ def index():
             stipend=stipend_,
             requirements=requirements_,
             job_type=jobtype,
-            company_id=company.id
+            company_id=company.id,
+            compnay_name = company.company_name
         )
         db.session.add(job)
         db.session.commit()
@@ -97,7 +98,8 @@ def api_jobs():
             "description": job.description,
             "stipend": job.stipend,
             "requirements": job.requirements,
-            "job_type": job.job_type
+            "job_type": job.job_type,
+            "company_name":job.company_name
         }
         for job in jobs
     ]
