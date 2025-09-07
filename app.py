@@ -231,6 +231,46 @@ def logout():
     return redirect(url_for('landing'))
 
 # ==========================
+# Apply for Job (Student)
+# ==========================
+@app.route("/api/apply", methods=["POST"])
+def apply_job():
+    if "student_id" not in session:
+        return jsonify({"success": False, "message": "Not logged in"}), 401
+
+    data = request.get_json()
+    job_id = data.get("job_id")
+
+    # Fetch student ID from session
+    student_id = session["student_id"]
+
+    # Get the job being applied for
+    job = JobListing.query.get(job_id)
+    if not job:
+        return jsonify({"success": False, "message": "Job not found"}), 404
+
+    # ✅ Check if the student already applied for this job
+    existing_application = StudentListing.query.filter_by(
+        student_id=student_id, requirements=job.title
+    ).first()
+
+    if existing_application:
+        return jsonify({"success": False, "message": "You already applied for this job."}), 400
+
+    # Create a new application
+    new_application = StudentListing(
+        student_id=student_id,
+        requirements=job.title   # storing job title as requirement
+    )
+    db.session.add(new_application)
+    db.session.commit()
+
+    return jsonify({"success": True, "message": f"Application submitted for {job.title}!"})
+
+
+
+
+# ==========================
 # Run App
 # ==========================
 if __name__ == "__main__":

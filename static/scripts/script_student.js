@@ -74,10 +74,10 @@ function createProjectCard(project) {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-        <h3>${project.company || 'Unknown Company'}</h3>
+        <h3>${project.company_name || 'Unknown Company'}</h3>
         <h4>${project.title}</h4>
         <p>${project.description}</p>
-        <button class="btn-primary" onclick="handleApply('project', ${project.id})">Apply</button>
+        <button id="apply-btn-${project.id}" class="btn-primary" onclick="handleApply(${project.id})">Apply Now</button>
     `;
     return card;
 }
@@ -87,20 +87,45 @@ function createInternshipCard(internship) {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-        <h3>${internship.company || 'Unknown Company'}</h3>
+        <h3>${internship.company_name || 'Unknown Company'}</h3>
         <h4>${internship.title}</h4>
         <p><strong>Stipend:</strong> ${internship.stipend || 'N/A'}</p>
         <p>${internship.description}</p>
-        <button class="btn-primary" onclick="handleApply('internship', ${internship.id})">Apply</button>
+        <button id="apply-btn-${internship.id}" class="btn-primary" onclick="handleApply(${internship.id})">Apply Now</button>
     `;
     return card;
 }
 
 // Handle Apply Button Click
-function handleApply(type, id) {
-    applicationsCount++;
-    if (applicationsCounter) applicationsCounter.textContent = applicationsCount;
-    alert(`Application submitted for ${type} #${id}!`);
+async function handleApply(jobId) {
+    try {
+        const response = await fetch('/api/apply', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ job_id: jobId })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            applicationsCount++;
+            if (applicationsCounter) applicationsCounter.textContent = applicationsCount;
+
+            const button = document.getElementById(`apply-btn-${jobId}`);
+            if (button) {
+                button.textContent = "Applied";
+                button.disabled = true;
+                button.classList.add("disabled-btn");
+            }
+
+            alert(result.message);
+        } else {
+            alert("Error: " + result.message);
+        }
+    } catch (error) {
+        console.error("Error applying:", error);
+        alert("Something went wrong while applying.");
+    }
 }
 
 // Search Functionality
