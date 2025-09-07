@@ -41,7 +41,29 @@
             <div class="card-inner">
                 <h2>Previous Job Listings</h2>
                 <div class="job-grid" id="previous-jobs">
-                    <!-- Jobs will be populated by JavaScript -->
+                    {% if jobs %}
+                        {% for job in jobs %}
+                        <div class="job-card">
+                            <h3>{{ job.title }}</h3>
+                            <p class="job-type">Type: {{ job.job_type }}</p>
+                            <p class="stipend">Stipend: {{ job.stipend }}</p>
+                            <div class="job-description">
+                                <h4>Description:</h4>
+                                <p>{{ job.description }}</p>
+                            </div>
+                            <div class="job-requirements">
+                                <h4>Requirements:</h4>
+                                <p>{{ job.requirements }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-jobs-message">
+                            <h3>No Jobs Posted Yet</h3>
+                            <p>Ready to find amazing talent? Click on "Post Job" to create your first job listing and connect with skilled students.</p>
+                            <button class="btn" onclick="document.querySelector('[data-page=jobs]').click()">Post Your First Job</button>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -54,14 +76,20 @@
                 <h2>Post a New Job</h2>
                 <form method = "POST" id="job-form">
                     <div class="form-group">
-                        <label for="job-type">Job Title/Type</label>
+                        <label for="job-type">Job Title</label>
                         <input type="text" id="job-type" name="jobType" placeholder="e.g., Software Engineer Intern">
                         <div class="error" id="job-type-error">Job type is required</div>
                     </div>
 
+                    <div class = "form-group">
+                        <label for = "Job Type"> Job Type</label>
+                        <input type = "text" id = "job_type" name = "jobtype" placeholder="intership/project">
+                        <div class = "error" id = "stipedn-error"> Job Type is required</div>
+                    </div>
+
                     <div class="form-group">
                         <label for="stipend">Stipend (per month)</label>
-                        <input type="text" id="stipend" name="stipend" placeholder="e.g., $2000">
+                        <input type="text" id="stipend" name="stipend" placeholder="e.g., $2000/NA">
                         <div class="error" id="stipend-error">Stipend is required</div>
                     </div>
 
@@ -87,9 +115,43 @@
     <div id="applicants-page" class="page" style="display: none;">
         <div class="card">
             <div class="card-inner">
-                <h2>Job Applicants</h2>
+                <h2>Student Profiles</h2>
                 <div class="applicant-grid" id="applicants-list">
-                    <!-- Applicants will be populated by JavaScript -->
+                    {% if students %}
+                        {% for student in students %}
+                        <div class="applicant-card" onclick="showApplicantDetails('{{ student.id }}')">
+                            <h3 class="applicant-name">{{ student.name }}</h3>
+                            <div class="applicant-info">
+                                <p class="college-roll">Roll: {{ student.college_roll }}</p>
+                                {% if student.skillset %}
+                                <p class="skills">{{ student.skillset }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="applicant-links">
+                                {% if student.github %}
+                                <a href="{{ student.github }}" target="_blank" class="profile-link github">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                {% endif %}
+                                {% if student.linkedin %}
+                                <a href="{{ student.linkedin }}" target="_blank" class="profile-link linkedin">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                {% endif %}
+                                {% if student.portfolio %}
+                                <a href="{{ student.portfolio }}" target="_blank" class="profile-link portfolio">
+                                    <i class="fas fa-globe"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-applicants-message">
+                            <h3>No Student Profiles Available</h3>
+                            <p>There are currently no student profiles in the system. Check back later as students register and create their profiles.</p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -101,7 +163,38 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <div id="modal-body">
-            <!-- Applicant details will be populated here -->
+            {% for student in students %}
+            <div class="student-detail" id="student-{{ student.id }}" style="display: none;">
+                <h2>{{ student.name }}</h2>
+                <p class="student-roll">Roll Number: {{ student.college_roll }}</p>
+                {% if student.about %}
+                <div class="about-section">
+                    <h3>About</h3>
+                    <p>{{ student.about }}</p>
+                </div>
+                {% endif %}
+                {% if student.skillset %}
+                <div class="skills-section">
+                    <h3>Skills</h3>
+                    <p>{{ student.skillset }}</p>
+                </div>
+                {% endif %}
+                <div class="profile-links">
+                    {% if student.resume %}
+                    <a href="{{ student.resume }}" target="_blank" class="btn">View Resume</a>
+                    {% endif %}
+                    {% if student.github %}
+                    <a href="{{ student.github }}" target="_blank" class="btn">GitHub Profile</a>
+                    {% endif %}
+                    {% if student.linkedin %}
+                    <a href="{{ student.linkedin }}" target="_blank" class="btn">LinkedIn Profile</a>
+                    {% endif %}
+                    {% if student.portfolio %}
+                    <a href="{{ student.portfolio }}" target="_blank" class="btn">Portfolio</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

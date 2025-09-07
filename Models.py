@@ -12,6 +12,7 @@ class CompanyProfile(db.Model):
     company_name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(200))  # 200 characters
     website = db.Column(db.String(200))
+    password = db.Column(db.String(256))
 
     # Relationship: one company → many job listings
     job_listings = db.relationship("JobListing", backref="company", lazy=True)
@@ -48,7 +49,7 @@ class JobListing(db.Model):
     job_type = db.Column(db.String(50))  # Internship / Project
     stipend = db.Column(db.String(100))
     requirements = db.Column(db.String(300))
-
+    company_name = db.Column(db.String(200))
 
 # ==========================
 # 4. Student Listing

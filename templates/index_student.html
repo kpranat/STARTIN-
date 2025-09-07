@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STARTIN' – Student Dashboard</title>
-    <link rel="stylesheet" href="../static/styles_student.css">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'styles_student.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,11 +14,11 @@
 <nav class="navbar">
     <div class="nav-brand">STARTIN'</div>
     <div class="nav-links">
-        <a href="#" class="active">Home</a>
+        <a href="{{url_for('index1')}}" class="active">Home</a>
         <a href="#projects">Projects</a>
         <a href="#internships">Internships</a>
-        <a href="profile_student.html">Profile</a>
-        <a href="index_login.html" class="logout-btn">Logout</a>
+        <a href="{{url_for('static',filename='profile_student.html')}}" class="nav-link">Profile</a>
+        <a href="{{url_for('login')}}" class="logout-btn">Logout</a>
     </div>
 </nav>
 
@@ -106,7 +106,7 @@
                 </div>
                 <div class="profile-actions">
                     <button class="btn-primary"><i class="fas fa-file-upload"></i> Upload Resume</button>
-                    <a href="profile_student.html" class="btn-secondary"><i class="fas fa-edit"></i> Edit Profile</a>
+                    <a href="{{url_for('static', filename='profile_student.html')}}" class="btn-secondary"><i class="fas fa-edit"></i> Edit Profile</a>
                 </div>
             </div>
             <div class="profile-grid">
@@ -147,6 +147,6 @@
     </section>
 </main>
 
-<script src="../static/scripts/script_student.js"></script>
+<script src="{{url_for('static', filename='scripts/script_student.js')}}"></script>
 </body>
 </html>

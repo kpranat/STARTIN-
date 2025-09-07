@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Profile - STARTIN'</title>
-    <link rel="stylesheet" href="../static/styles_student.css">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'portfolio_style.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,17 +14,17 @@
 <nav class="navbar">
     <div class="nav-brand">STARTIN'</div>
     <div class="nav-links">
-        <a href="index_student.html">Home</a>
-        <a href="index_student.html#projects">Projects</a>
-        <a href="index_student.html#internships">Internships</a>
-        <a href="profile_student.html" class="active">Profile</a>
+        <a href="{{url_for('index1')}}">Home</a>
+        <!-- <a href="index_student.html#projects">Projects</a>
+        <a href="index_student.html#internships">Internships</a> -->
+        <a href="{{url_for('static',filename = 'profile_student.html')}}" class="active">Profile</a>
     </div>
 </nav>
 
 <main>
     <div class="profile-form-container">
         <h1>Student Profile</h1>
-        <form id="studentProfileForm" class="profile-form">
+        <form method = "POST" id = "studentProfileForm" class="profile-form">
             <div class="form-group">
                 <label for="studentName">Student Name*</label>
                 <input type="text" id="studentName" name="studentName" required>
@@ -35,10 +35,10 @@
                 <input type="text" id="rollNumber" name="rollNumber" required>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="stuId">STU Unique ID*</label>
                 <input type="text" id="stuId" name="stuId" required>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label for="aboutMe">About Me</label>
@@ -48,8 +48,8 @@
             <div class="form-group">
                 <label for="skillset">Skillset*</label>
                 <div class="tags-input-container">
-                    <input type="text" id="skillset" name="skillset" placeholder="Type skills and press Enter or comma">
-                    <div class="tags-container" id="tagsContainer"></div>
+                    <input type="text" id="skillset" name="skillset" placeholder="Type skills">
+                    <!-- <div class="tags-container" id="tagsContainer"></div> -->
                 </div>
             </div>
 
@@ -84,6 +84,6 @@
     </div>
 </main>
 
-<script src="../static/scripts/profile_student.js"></script>
+<script src="{{url_for('static',filename = 'scripts/profile_student.js')}}"></script>
 </body>
 </html>

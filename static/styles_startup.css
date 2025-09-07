@@ -239,6 +239,74 @@ p {
     margin-top: 2rem;
 }
 
+.job-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.job-card h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.job-card .job-type,
+.job-card .stipend {
+    color: var(--silver-light);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.job-card .job-description,
+.job-card .job-requirements {
+    margin-top: 1rem;
+}
+
+.job-card h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.job-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-jobs-message {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    grid-column: 1 / -1;
+}
+
+.no-jobs-message h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.no-jobs-message p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-jobs-message .btn {
+    display: inline-block;
+    margin: 0 auto;
+}
+
 .applicant-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -272,6 +340,100 @@ p {
 
 .applicant-info {
     color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 1rem 0;
+}
+
+.applicant-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.profile-link {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.profile-link:hover {
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.profile-link.github:hover {
+    color: #f0f6fc;
+}
+
+.profile-link.linkedin:hover {
+    color: #0077b5;
+}
+
+.profile-link.portfolio:hover {
+    color: #64ffda;
+}
+
+.no-applicants-message {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    grid-column: 1 / -1;
+}
+
+.no-applicants-message h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.no-applicants-message p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.student-detail {
+    display: none;
+    padding: 1.5rem;
+}
+
+.student-detail.active {
+    display: block;
+}
+
+.student-detail h2 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.student-roll {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-section,
+.skills-section {
+    margin: 1.5rem 0;
+}
+
+.about-section h3,
+.skills-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.profile-links .btn {
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
 }
 

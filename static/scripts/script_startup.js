@@ -1,7 +1,7 @@
 /* ================================
    GLOBAL VARIABLES & DATA
 ================================ */
-
+/* 
 // Sample data for previous jobs
 const previousJobs = [
     {
@@ -22,7 +22,7 @@ const previousJobs = [
         description: "Develop cross-platform mobile applications for iOS and Android using React Native.",
         requirements: "React Native, JavaScript, mobile development experience"
     }
-];
+]; */
 
 // Sample applicant data
 const applicants = [
@@ -168,7 +168,7 @@ function validateForm() {
 }
 
 // Form submission handler
-jobForm.addEventListener('submit', (e) => {
+/* jobForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     if (validateForm()) {
@@ -196,7 +196,7 @@ jobForm.addEventListener('submit', (e) => {
         // Switch to profile page to see the new job
         showPage('profile');
     }
-});
+}); */
 
 // Real-time validation
 ['job-type', 'stipend', 'description', 'requirements'].forEach(fieldId => {
@@ -238,6 +238,22 @@ function displayApplicants() {
 /* ================================
    APPLICANT PROFILE MODAL
 ================================ */
+function showApplicantDetails(studentId) {
+    // Hide all student details first
+    document.querySelectorAll('.student-detail').forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    // Show the selected student's details
+    const studentDetail = document.getElementById(`student-${studentId}`);
+    if (studentDetail) {
+        studentDetail.style.display = 'block';
+    }
+    
+    // Show the modal
+    modal.style.display = 'block';
+}
+
 function showApplicantProfile(index) {
     const applicant = applicants[index];
     const modalBody = document.getElementById('modal-body');

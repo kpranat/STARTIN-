@@ -31,29 +31,28 @@ document.addEventListener('DOMContentLoaded', () => {
             tags.delete(tag);
             tagElement.remove();
         });
+
+        // Update hidden input with current tags
+        updateSkillsetValue();
+    }
+
+    function updateSkillsetValue() {
+        // Update the skillset input with comma-separated tags
+        skillsetInput.value = Array.from(tags).join(',');
     }
 
     // Real-time validation
-    const requiredFields = ['studentName', 'rollNumber', 'stuId'];
+    const requiredFields = ['studentName', 'rollNumber'];
     requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (field) {
             field.addEventListener('input', () => {
-                if (field.value.trim()) {
-                    field.style.borderColor = '';
-                }
+                validateField(field);
             });
         }
     });
 
-    // Real-time validation for skillset
-    skillsetInput.addEventListener('input', () => {
-        if (skillsetInput.value.trim() || tags.size > 0) {
-            skillsetInput.style.borderColor = '';
-        }
-    });
-
-    // Real-time URL validation
+    // URL validation
     const urlFields = ['github', 'linkedin', 'portfolio'];
     urlFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
@@ -68,73 +67,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Form Validation and Submission
+    // Form Submission
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // Basic validation
-        const requiredFields = ['studentName', 'rollNumber', 'stuId', 'resume'];
-        let isValid = true;
-
-        requiredFields.forEach(field => {
-            const input = document.getElementById(field);
-            if (!input.value) {
-                isValid = false;
-                input.style.borderColor = '#ff6b6b';
-            } else {
-                input.style.borderColor = '';
-            }
-        });
-
-        // Validate skills (at least one skill required)
-        if (tags.size === 0) {
-            isValid = false;
-            skillsetInput.style.borderColor = '#ff6b6b';
-        } else {
-            skillsetInput.style.borderColor = '';
+        let isValid = validateForm();
+        if (!isValid) {
+            e.preventDefault();
         }
-
-        // URL validation
-        const urlFields = ['github', 'linkedin', 'portfolio'];
-        urlFields.forEach(field => {
-            const input = document.getElementById(field);
-            if (input.value && !isValidURL(input.value)) {
-                isValid = false;
-                input.style.borderColor = '#ff6b6b';
-            } else {
-                input.style.borderColor = '';
-            }
-        });
-
-        if (isValid) {
-            // In a real application, you would send this data to a server
-            const formData = new FormData(form);
-            formData.append('skills', Array.from(tags).join(','));
-
-            // Show success message
-            alert('Profile saved successfully!');
-
-            // Log form data for debugging
-            console.log('Profile data saved:', {
-                studentName: formData.get('studentName'),
-                rollNumber: formData.get('rollNumber'),
-                stuId: formData.get('stuId'),
-                aboutMe: formData.get('aboutMe'),
-                skills: Array.from(tags),
-                github: formData.get('github'),
-                linkedin: formData.get('linkedin'),
-                portfolio: formData.get('portfolio'),
-                resume: formData.get('resume')?.name || 'No file selected'
-            });
-
-            // Optional: Reset form
-            // form.reset();
-            // tags.clear();
-            // tagsContainer.innerHTML = '';
-        } else {
-            alert('Please fill in all required fields correctly.');
+        else{
+            alert("uploaded");
         }
     });
+
+    // Form Validation
+    function validateForm() {
+        let isValid = true;
+
+        // Validate required fields
+        requiredFields.forEach(field => {
+            const input = document.getElementById(field);
+            if (input && !validateField(input)) {
+                isValid = false;
+            }
+        });
+
+        // Validate URLs
+        urlFields.forEach(field => {
+            const input = document.getElementById(field);
+            if (input && input.value && !isValidURL(input.value)) {
+                isValid = false;
+                input.style.borderColor = '#ff6b6b';
+            }
+        });
+
+        return isValid;
+    }
+
+    function validateField(field) {
+        if (!field.value.trim()) {
+            field.style.borderColor = '#ff6b6b';
+            return false;
+        }
+        field.style.borderColor = '';
+        return true;
+    }
 
     // URL validation helper
     function isValidURL(string) {
@@ -150,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('reset', () => {
         tags.clear();
         tagsContainer.innerHTML = '';
+        skillsetInput.value = '';
 
         // Clear any validation styling
         form.querySelectorAll('input, textarea').forEach(input => {

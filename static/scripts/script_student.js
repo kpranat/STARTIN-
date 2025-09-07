@@ -1,43 +1,41 @@
-// Sample Data (Replace with actual API calls in production)
-const sampleProjects = [
-    {
-        id: 1,
-        company: "Tech Solutions Inc.",
-        title: "AI Research Project",
-        eligibility: "3rd year CS students",
-        description: "Research project focusing on implementing machine learning algorithms for predictive analytics.",
-        requirements: ["Python expertise", "Machine Learning knowledge", "Statistics background"]
-    },
-    {
-        id: 2,
-        company: "Digital Dynamics",
-        title: "Web Platform Development",
-        eligibility: "2nd+ year IT/CS students",
-        description: "Development of a new web platform using modern technologies.",
-        requirements: ["JavaScript", "React", "Node.js", "MongoDB"]
-    }
-];
+let sampleProjects = [];
+let sampleInternships = [];
 
-const sampleInternships = [
-    {
-        id: 1,
-        company: "Innovation Labs",
-        role: "Software Developer Intern",
-        stipend: "₹20,000/month",
-        jobType: "Full-time, Remote",
-        description: "Join our team to work on cutting-edge software solutions.",
-        requirements: ["Strong programming fundamentals", "Knowledge of web technologies", "Good communication skills"]
-    },
-    {
-        id: 2,
-        company: "DataTech Solutions",
-        role: "Data Science Intern",
-        stipend: "₹25,000/month",
-        jobType: "Part-time, Hybrid",
-        description: "Work on real-world data science projects with our analytics team.",
-        requirements: ["Python", "Data Analysis", "Machine Learning basics"]
+// Fetch jobs from Flask API
+async function fetchJobs() {
+    try {
+        const response = await fetch('/api/jobs');
+        const jobs = await response.json();
+
+        sampleProjects = jobs.filter(job => job.job_type === "Project");
+        sampleInternships = jobs.filter(job => job.job_type === "Internship");
+
+        populateProjects();
+        populateInternships();
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
     }
-];
+}
+
+// Populate project cards
+function populateProjects() {
+    if (projectsGrid) {
+        projectsGrid.innerHTML = '';
+        sampleProjects.forEach(project => {
+            projectsGrid.appendChild(createProjectCard(project));
+        });
+    }
+}
+
+// Populate internship cards
+function populateInternships() {
+    if (internshipsGrid) {
+        internshipsGrid.innerHTML = '';
+        sampleInternships.forEach(internship => {
+            internshipsGrid.appendChild(createInternshipCard(internship));
+        });
+    }
+}
 
 // DOM Elements
 const sections = document.querySelectorAll('.section');
@@ -84,7 +82,6 @@ function createProjectCard(project) {
     card.innerHTML = `
         <h3>${project.company}</h3>
         <h4>${project.title}</h4>
-        <p>${project.eligibility}</p>
     `;
     card.addEventListener('click', () => showProjectDetail(project));
     return card;
@@ -96,9 +93,8 @@ function createInternshipCard(internship) {
     card.className = 'card';
     card.innerHTML = `
         <h3>${internship.company}</h3>
-        <h4>${internship.role}</h4>
+        <h4>${internship.title}</h4>
         <p>${internship.stipend}</p>
-        <p>${internship.jobType}</p>
     `;
     card.addEventListener('click', () => showInternshipDetail(internship));
     return card;
@@ -106,44 +102,27 @@ function createInternshipCard(internship) {
 
 // Show Project Detail
 function showProjectDetail(project) {
-    if (projectDetail) {
-        projectDetail.innerHTML = `
-            <h2>${project.company}</h2>
-            <h3>${project.title}</h3>
-            <p><strong>Eligibility:</strong> ${project.eligibility}</p>
-            <p><strong>Description:</strong> ${project.description}</p>
-            <div class="requirements">
-                <h4>Requirements:</h4>
-                <ul>
-                    ${project.requirements.map(req => `<li>${req}</li>`).join('')}
-                </ul>
-            </div>
-            <button class="btn-primary" onclick="handleApply('project', ${project.id})">Apply Now</button>
-        `;
-        projectDetail.classList.add('active');
-    }
+    projectDetail.innerHTML = `
+        <h2>${project.title}</h2>
+        <p><strong>Description:</strong> ${project.description}</p>
+        <p><strong>Requirements:</strong> ${project.requirements || "Not specified"}</p>
+        <button class="btn-primary" onclick="handleApply('project', ${project.id})">Apply Now</button>
+    `;
+    projectDetail.classList.add('active');
 }
 
-// Show Internship Detail
+
 function showInternshipDetail(internship) {
-    if (internshipDetail) {
-        internshipDetail.innerHTML = `
-            <h2>${internship.company}</h2>
-            <h3>${internship.role}</h3>
-            <p><strong>Stipend:</strong> ${internship.stipend}</p>
-            <p><strong>Job Type:</strong> ${internship.jobType}</p>
-            <p><strong>Description:</strong> ${internship.description}</p>
-            <div class="requirements">
-                <h4>Requirements:</h4>
-                <ul>
-                    ${internship.requirements.map(req => `<li>${req}</li>`).join('')}
-                </ul>
-            </div>
-            <button class="btn-primary" onclick="handleApply('internship', ${internship.id})">Apply Now</button>
-        `;
-        internshipDetail.classList.add('active');
-    }
+    internshipDetail.innerHTML = `
+        <h2>${internship.title || internship.role}</h2>
+        <p><strong>Stipend:</strong> ${internship.stipend || "N/A"}</p>
+        <p><strong>Description:</strong> ${internship.description}</p>
+        <p><strong>Requirements:</strong> ${internship.requirements || "Not specified"}</p>
+        <button class="btn-primary" onclick="handleApply('internship', ${internship.id})">Apply Now</button>
+    `;
+    internshipDetail.classList.add('active');
 }
+
 
 // Handle Apply Button Click
 function handleApply(type, id) {
@@ -239,6 +218,8 @@ function init() {
         setupSearch(searchBars[0], sampleProjects, createProjectCard, projectsGrid);
         setupSearch(searchBars[1], sampleInternships, createInternshipCard, internshipsGrid);
     }
+
+    fetchJobs();
 }
 
 // Initialize when DOM is loaded
