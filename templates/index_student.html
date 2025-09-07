@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STARTIN' – Student Dashboard</title>
-    <link rel="stylesheet" href="{{url_for('static',filename = 'styles_student.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles_student.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,7 +14,7 @@
 <nav class="navbar">
     <div class="nav-brand">STARTIN'</div>
     <div class="nav-links">
-        <a href="{{url_for('index1')}}" class="active">Home</a>
+        <a href="#" class="active">Home</a>
         <a href="#projects">Projects</a>
         <a href="#internships">Internships</a>
         <a href="{{url_for('profile')}}" class="nav-link">Profile</a>
@@ -30,15 +30,15 @@
         <div class="dashboard-stats">
             <div class="stat-card">
                 <h3>Active Projects</h3>
-                <p>{{ projects|length if projects else 0 }}</p>
+                <p id="active-projects-count">0</p>
             </div>
             <div class="stat-card">
                 <h3>Open Internships</h3>
-                <p>{{ jobs|length if jobs else 0 }}</p>
+                <p id="open-internships-count">0</p>
             </div>
             <div class="stat-card">
                 <h3>Applications</h3>
-                <p>{{ applications|length if applications else 0 }}</p>
+                <p id="applications-count">0</p>
             </div>
         </div>
     </section>
@@ -49,17 +49,8 @@
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search projects...">
         </div>
-        <div class="cards-grid">
-            {% if projects %}
-                {% for project in projects %}
-                    <div class="card">
-                        <h3>{{ project.title }}</h3>
-                        <p>{{ project.description }}</p>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No projects available.</p>
-            {% endif %}
+        <div class="cards-grid" id="projects-grid">
+            <!-- Project cards injected by JS -->
         </div>
     </section>
 
@@ -69,18 +60,8 @@
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search internships...">
         </div>
-        <div class="cards-grid">
-            {% if jobs %}
-                {% for job in jobs %}
-                    <div class="card">
-                        <h3>{{ job.title }}</h3>
-                        <p><strong>Stipend:</strong> {{ job.stipend }}</p>
-                        <p>{{ job.description }}</p>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No internships posted yet.</p>
-            {% endif %}
+        <div class="cards-grid" id="internships-grid">
+            <!-- Internship cards injected by JS -->
         </div>
     </section>
 

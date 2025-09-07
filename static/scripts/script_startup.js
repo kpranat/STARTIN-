@@ -17,6 +17,9 @@ function showPage(pageId) {
 
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
+            if (link.classList.contains('logout')){
+                return;
+            }
         e.preventDefault();
         const pageId = link.getAttribute('data-page');
         showPage(pageId);

@@ -10,7 +10,7 @@
 <div class="navbar">
     <div class="nav-container">
         <div class="logo">STARTIN'</div>
-        <a href="landing.html" class="btn-back">← Back</a>
+        <a href="{{ url_for('landing') }}" class="btn-back">← Back</a>
     </div>
 </div>
 
@@ -23,27 +23,38 @@
             </div>
 
             <form method="POST" action="{{ url_for('login_student') }}">
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required>
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" required>
-    </div>
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary" name="login-btn">Login</button>
-        <button type="submit" class="btn btn-secondary" name="register-btn">Create Account</button>
-    </div>
-</form>
-{% if error %}
-<p style="color:red">{{ error }}</p>
-{% endif %}
+                <!-- Hidden input to determine login or registration -->
+                <input type="hidden" name="register" id="register-mode" value="0">
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" onclick="setRegisterMode(0)">Login</button>
+                    <button type="submit" class="btn btn-secondary" onclick="setRegisterMode(1)">Create Account</button>
+                </div>
+            </form>
+
+            {% if error %}
+            <p style="color:red">{{ error }}</p>
+            {% endif %}
 
         </div>
     </div>
 </div>
 
-<script src="/static/scripts/script_loginStudent.js"></script>
+<script>
+    // Function to set the hidden 'register' input before submitting
+    function setRegisterMode(value) {
+        document.getElementById('register-mode').value = value;
+    }
+</script>
 </body>
 </html>
