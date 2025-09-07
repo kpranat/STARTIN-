@@ -1,1 +1,14 @@
-/static/uploads
+# Python cache
+_pycache_/
+*.pyc
+
+# Instance Folder (for your database)
+/instance/
+
+# Uploads
+/static/uploads/
+
+# IDE / OS Files
+.idea/
+.vscode/
+.DS_Store
