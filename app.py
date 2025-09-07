@@ -75,7 +75,7 @@ def index():
             requirements=requirements_,
             job_type=jobtype,
             company_id=company.id,
-            compnay_name = company.company_name
+            company_name=company.company_name
         )
         db.session.add(job)
         db.session.commit()
