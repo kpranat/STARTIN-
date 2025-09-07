@@ -161,7 +161,7 @@
                 </div>
 
                 <div class="profile-links">
-                    {% if student.resume %}<a href="{{ student.resume }}" target="_blank" class="btn">Resume</a>{% endif %}
+                    {% if student.resume %}<a href="{{ url_for('static', filename=student.resume) }}" target="_blank" class="btn">Resume</a>{% endif %}
                     {% if student.github %}<a href="{{ student.github }}" target="_blank" class="btn">GitHub</a>{% endif %}
                     {% if student.linkedin %}<a href="{{ student.linkedin }}" target="_blank" class="btn">LinkedIn</a>{% endif %}
                     {% if student.portfolio %}<a href="{{ student.portfolio }}" target="_blank" class="btn">Portfolio</a>{% endif %}
