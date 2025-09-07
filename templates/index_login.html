@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University Login Portal</title>
-    <link rel="stylesheet" href="../static/styles_login.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles_login.css')}}">
 </head>
 <body>
 <!-- University Selection Page -->
@@ -96,7 +96,7 @@
                     <p class="login-subtitle">SRM University Portal</p>
                 </div>
 
-                <form id="login-form" class="login-form" novalidate>
+                <form method = "POST" action= "/" id="login-form" class="login-form" novalidate>
                     <!-- Student Login Fields -->
                     <div class="student-fields">
                         <div class="form-group">
@@ -143,8 +143,8 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
-                        <button type="button" class="btn btn-secondary" id="register-btn">Create Account</button>
+                        <button type="submit" class="btn btn-primary" id="login-btn" name = "login-btn">Login</button>
+                        <button type="button" class="btn btn-secondary" id="register-btn" name= "">Create Account</button>
                     </div>
 
                     <div class="form-footer">
@@ -156,6 +156,6 @@
     </div>
 </div>
 
-<script src="../static/scripts/script_login.js"></script>
+<script src="{{url_for('static',filename = 'scripts/script_login.js')}}"></script>
 </body>
 </html>

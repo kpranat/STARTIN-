@@ -17,8 +17,8 @@
         <a href="{{url_for('index1')}}" class="active">Home</a>
         <a href="#projects">Projects</a>
         <a href="#internships">Internships</a>
-        <a href="{{url_for('static',filename='profile_student.html')}}" class="nav-link">Profile</a>
-        <a href="{{url_for('login')}}" class="logout-btn">Logout</a>
+        <a href="{{url_for('profile')}}" class="nav-link">Profile</a>
+        <a href="{{url_for('logout')}}" class="logout-btn">Logout</a>
     </div>
 </nav>
 
@@ -26,19 +26,19 @@
 <main>
     <!-- Dashboard Welcome -->
     <section id="dashboard" class="section active">
-        <h1>Welcome to Your Dashboard</h1>
+        <h1>Welcome, {{ student.email }}</h1>
         <div class="dashboard-stats">
             <div class="stat-card">
                 <h3>Active Projects</h3>
-                <p>12</p>
+                <p>{{ projects|length if projects else 0 }}</p>
             </div>
             <div class="stat-card">
                 <h3>Open Internships</h3>
-                <p>24</p>
+                <p>{{ jobs|length if jobs else 0 }}</p>
             </div>
             <div class="stat-card">
                 <h3>Applications</h3>
-                <p>3</p>
+                <p>{{ applications|length if applications else 0 }}</p>
             </div>
         </div>
     </section>
@@ -49,8 +49,18 @@
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search projects...">
         </div>
-        <div class="cards-grid" id="projects-grid"></div>
-        <div class="detail-panel" id="project-detail"></div>
+        <div class="cards-grid">
+            {% if projects %}
+                {% for project in projects %}
+                    <div class="card">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No projects available.</p>
+            {% endif %}
+        </div>
     </section>
 
     <!-- Internships Section -->
@@ -59,32 +69,24 @@
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search internships...">
         </div>
-        <div class="cards-grid" id="internships-grid"></div>
-        <div class="detail-panel" id="internship-detail"></div>
+        <div class="cards-grid">
+            {% if jobs %}
+                {% for job in jobs %}
+                    <div class="card">
+                        <h3>{{ job.title }}</h3>
+                        <p><strong>Stipend:</strong> {{ job.stipend }}</p>
+                        <p>{{ job.description }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No internships posted yet.</p>
+            {% endif %}
+        </div>
     </section>
 
     <!-- Profile Section -->
     <section id="profile" class="section">
         <div class="profile-hero">
-            <div class="profile-cover">
-                <div class="profile-header">
-                    <h2>Student Profile</h2>
-                    <div class="profile-stats">
-                        <div class="stat">
-                            <span class="stat-value">12</span>
-                            <span class="stat-label">Applications</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value">8</span>
-                            <span class="stat-label">Interviews</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value">3</span>
-                            <span class="stat-label">Offers</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="profile-main">
                 <div class="profile-avatar-container">
                     <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-picture">
@@ -92,55 +94,23 @@
                 </div>
                 <div class="profile-info">
                     <div class="profile-name-container">
-                        <h3>John Doe</h3>
-                        <span class="profile-badge">Premium</span>
+                        <h3>{{ profile.name if profile else 'No Name Set' }}</h3>
+                        <span class="profile-badge">Basic</span>
                     </div>
-                    <p class="profile-title">Computer Science</p>
-                    <p class="profile-subtitle">Year: 3 • GPA: 3.8</p>
+                    <p class="profile-title">{{ profile.college_roll if profile else 'N/A' }}</p>
+                    <p class="profile-subtitle">{{ profile.about if profile else 'Tell us about yourself' }}</p>
                     <div class="profile-tags">
-                        <span class="profile-tag">Python</span>
-                        <span class="profile-tag">JavaScript</span>
-                        <span class="profile-tag">React</span>
-                        <span class="profile-tag">Node.js</span>
+                        {% if profile and profile.skillset %}
+                            {% for skill in profile.skillset.split(',') %}
+                                <span class="profile-tag">{{ skill.strip() }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="profile-tag">No skills added</span>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="profile-actions">
-                    <button class="btn-primary"><i class="fas fa-file-upload"></i> Upload Resume</button>
-                    <a href="{{url_for('static', filename='profile_student.html')}}" class="btn-secondary"><i class="fas fa-edit"></i> Edit Profile</a>
-                </div>
-            </div>
-            <div class="profile-grid">
-                <div class="profile-card">
-                    <h4>Recent Activity</h4>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <span class="activity-dot"></span>
-                            <p>Applied to Software Engineer Intern at Tech Corp</p>
-                            <span class="activity-time">2 days ago</span>
-                        </div>
-                        <div class="activity-item">
-                            <span class="activity-dot"></span>
-                            <p>Completed Technical Assessment at DataTech</p>
-                            <span class="activity-time">5 days ago</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-card">
-                    <h4>Skills Overview</h4>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <span class="skill-name">Python</span>
-                            <div class="skill-bar"><div class="skill-progress skill-90"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">JavaScript</span>
-                            <div class="skill-bar"><div class="skill-progress skill-85"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">React</span>
-                            <div class="skill-bar"><div class="skill-progress skill-75"></div></div>
-                        </div>
-                    </div>
+                    <a href="{{url_for('profile')}}" class="btn-secondary"><i class="fas fa-edit"></i> Edit Profile</a>
                 </div>
             </div>
         </div>

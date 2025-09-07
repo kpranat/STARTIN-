@@ -17,7 +17,7 @@
         <a href="{{url_for('index1')}}">Home</a>
         <!-- <a href="index_student.html#projects">Projects</a>
         <a href="index_student.html#internships">Internships</a> -->
-        <a href="{{url_for('static',filename = 'profile_student.html')}}" class="active">Profile</a>
+        <a href="{{url_for('profile')}}" class="active">Profile</a>
     </div>
 </nav>
 
@@ -27,12 +27,12 @@
         <form method = "POST" id = "studentProfileForm" class="profile-form">
             <div class="form-group">
                 <label for="studentName">Student Name*</label>
-                <input type="text" id="studentName" name="studentName" required>
+                <input type="text" id="studentName" name="studentName" value="{{ profile.name if profile else '' }}" required>
             </div>
 
             <div class="form-group">
                 <label for="rollNumber">College Roll Number*</label>
-                <input type="text" id="rollNumber" name="rollNumber" required>
+                <input type="text" id="rollNumber" name="rollNumber" value="{{ profile.college_roll if profile else '' }}" required>
             </div>
 
             <!-- <div class="form-group">
@@ -42,13 +42,13 @@
 
             <div class="form-group">
                 <label for="aboutMe">About Me</label>
-                <textarea id="aboutMe" name="aboutMe" rows="4"></textarea>
+                <textarea id="aboutMe" name="aboutMe" rows="4">{{ profile.about if profile else '' }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="skillset">Skillset*</label>
                 <div class="tags-input-container">
-                    <input type="text" id="skillset" name="skillset" placeholder="Type skills">
+                    <input type="text" id="skillset" name="skillset" placeholder="Type skills" value="{{ profile.skillset if profile else '' }}">
                     <!-- <div class="tags-container" id="tagsContainer"></div> -->
                 </div>
             </div>
@@ -63,17 +63,17 @@
 
             <div class="form-group">
                 <label for="github">GitHub Profile</label>
-                <input type="url" id="github" name="github" placeholder="https://github.com/username">
+                <input type="url" id="github" name="github" value="{{ profile.github if profile else '' }}">
             </div>
 
             <div class="form-group">
                 <label for="linkedin">LinkedIn Profile</label>
-                <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username">
+                <input type="url" id="linkedin" name="linkedin" value="{{ profile.linkedin if profile else '' }}">
             </div>
 
             <div class="form-group">
                 <label for="portfolio">Portfolio Website</label>
-                <input type="url" id="portfolio" name="portfolio" placeholder="https://yourportfolio.com">
+                <input type="url" id="portfolio" name="portfolio" value="{{ profile.portfolio if profile else '' }}">
             </div>
 
             <div class="form-actions">
