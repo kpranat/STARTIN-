@@ -3,39 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STARTIN' - Select Role</title>
-    <link rel="stylesheet" href="/static/styles_login.css">
+    <title>University Landing Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_login.css') }}">
 </head>
 <body>
-<div class="navbar">
-    <div class="nav-container">
-        <div class="logo">STARTIN'</div>
+
+<!-- ==============================
+     UNIVERSITY SELECTION PAGE
+=============================== -->
+<div id="university-page" class="page active">
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">STARTIN'</div>
+        </div>
     </div>
-</div>
 
-<div class="main-container">
-    <div class="card">
-        <div class="card-inner">
-            <div class="company-header">
-                <h1>Choose Your Role</h1>
-                <p class="company-description">Select your profile to continue</p>
-            </div>
+    <div class="main-container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="company-header">
+                    <h1>Choose Your University</h1>
+                    <p class="company-description">Select your institution to access the portal</p>
+                </div>
 
-            <div class="role-grid">
-                <a href="student.html" class="role-card" data-role="student">
-                    <div class="role-icon">🎓</div>
-                    <div class="role-name">Student</div>
-                    <div class="role-description">Access student portal and resources</div>
-                </a>
+                <div class="university-grid">
+                    <div class="university-card" data-university="srm">
+                        <div class="university-name">SRM University</div>
+                        <div class="university-status available">Available</div>
+                    </div>
 
-                <a href="company.html" class="role-card" data-role="company">
-                    <div class="role-icon">🏢</div>
-                    <div class="role-name">Company</div>
-                    <div class="role-description">Post jobs and manage recruitment</div>
-                </a>
+                    <div class="university-card coming-soon" data-university="vit">
+                        <div class="university-name">VIT University</div>
+                        <div class="university-status">Coming Soon</div>
+                    </div>
+
+                    <div class="university-card coming-soon" data-university="bits">
+                        <div class="university-name">BITS Pilani</div>
+                        <div class="university-status">Coming Soon</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- ==============================
+     ROLE SELECTION PAGE
+=============================== -->
+<div id="role-page" class="page">
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">STARTIN'</div>
+            <button class="btn-back" onclick="goBack()">← Back</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="company-header">
+                    <h1>SRM University</h1>
+                    <p class="company-description">Choose your role to continue</p>
+                </div>
+
+                <div class="role-grid">
+                    <div class="role-card" data-role="student">
+                        <div class="role-icon">🎓</div>
+                        <div class="role-name">Student</div>
+                        <div class="role-description">Access student portal and resources</div>
+                    </div>
+
+                    <div class="role-card" data-role="company">
+                        <div class="role-icon">🏢</div>
+                        <div class="role-name">Company</div>
+                        <div class="role-description">Post jobs and manage recruitment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='scripts/script_landing.js') }}"></script>
 </body>
 </html>

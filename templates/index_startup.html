@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechCorp - Company Profile</title>
-    <link rel="stylesheet" href="../static/styles_startup.css">
+    <title>{{ company.company_name }} - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_startup.css') }}">
 </head>
 <body>
 <!-- Navigation -->
@@ -15,7 +15,7 @@
             <li><a href="#" class="nav-link active" data-page="profile">Profile</a></li>
             <li><a href="#" class="nav-link" data-page="jobs">Post Job</a></li>
             <li><a href="#" class="nav-link" data-page="applicants">Applicants</a></li>
-            <li><a href="index_login.html" class="nav-link logout">Logout</a></li>
+            <li><a href="{{ url_for('logout') }}" class="nav-link logout">Logout</a></li>
         </ul>
     </div>
 </nav>
@@ -26,12 +26,9 @@
     <div id="profile-page" class="page">
         <div class="company-header card">
             <div class="card-inner">
-                <h1>TechCorp Industries</h1>
-                <p class="company-description">
-                    Leading innovation in software development and digital transformation.
-                    We're building the future of technology, one brilliant mind at a time.
-                </p>
-                <a href="https://techcorp.example.com" target="_blank" class="website-link">
+                <h1>{{ company.company_name }}</h1>
+                <p class="company-description">{{ company.description }}</p>
+                <a href="{{ company.website }}" target="_blank" class="website-link">
                     🌐 Visit Our Website
                 </a>
             </div>
@@ -60,8 +57,7 @@
                     {% else %}
                         <div class="no-jobs-message">
                             <h3>No Jobs Posted Yet</h3>
-                            <p>Ready to find amazing talent? Click on "Post Job" to create your first job listing and connect with skilled students.</p>
-                            <button class="btn" onclick="document.querySelector('[data-page=jobs]').click()">Post Your First Job</button>
+                            <p>Click on "Post Job" to create your first job listing.</p>
                         </div>
                     {% endif %}
                 </div>
@@ -74,29 +70,29 @@
         <div class="card">
             <div class="card-inner">
                 <h2>Post a New Job</h2>
-                <form id="job-form">
+                <form id="job-form" method="POST" action="{{ url_for('index') }}">
                     <div class="form-group">
                         <label for="job-type">Job Title</label>
                         <input type="text" id="job-type" name="jobType" placeholder="e.g., Software Engineer Intern">
-                        <div class="error" id="job-type-error">Job type is required</div>
+                        <div class="error" id="job-type-error">Job title is required</div>
                     </div>
 
-                    <div class = "form-group">
-                        <label for = "Job Type"> Job Type</label>
-                        <input type = "text" id = "job_type" name = "jobtype" placeholder="intership/project">
-                        <div class = "error" id = "stipedn-error"> Job Type is required</div>
+                    <div class="form-group">
+                        <label for="job_type">Job Type</label>
+                        <input type="text" id="job_type" name="jobtype" placeholder="Internship / Project">
+                        <div class="error" id="job_type-error">Job type is required</div>
                     </div>
 
                     <div class="form-group">
                         <label for="stipend">Stipend (per month)</label>
-                        <input type="text" id="stipend" name="stipend" placeholder="e.g., $2000/NA">
+                        <input type="text" id="stipend" name="stipend" placeholder="e.g., $2000 / NA">
                         <div class="error" id="stipend-error">Stipend is required</div>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Job Description</label>
                         <textarea id="description" name="description" placeholder="Describe the role, responsibilities, and what the candidate will learn..."></textarea>
-                        <div class="error" id="description-error">Job description is required</div>
+                        <div class="error" id="description-error">Description is required</div>
                     </div>
 
                     <div class="form-group">
@@ -121,35 +117,15 @@
                         {% for student in students %}
                         <div class="applicant-card" onclick="showApplicantDetails('{{ student.id }}')">
                             <h3 class="applicant-name">{{ student.name }}</h3>
-                            <div class="applicant-info">
-                                <p class="college-roll">Roll: {{ student.college_roll }}</p>
-                                {% if student.skillset %}
+                            <p class="college-roll">Roll: {{ student.college_roll }}</p>
+                            {% if student.skillset %}
                                 <p class="skills">{{ student.skillset }}</p>
-                                {% endif %}
-                            </div>
-                            <div class="applicant-links">
-                                {% if student.github %}
-                                <a href="{{ student.github }}" target="_blank" class="profile-link github">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                {% endif %}
-                                {% if student.linkedin %}
-                                <a href="{{ student.linkedin }}" target="_blank" class="profile-link linkedin">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                {% endif %}
-                                {% if student.portfolio %}
-                                <a href="{{ student.portfolio }}" target="_blank" class="profile-link portfolio">
-                                    <i class="fas fa-globe"></i>
-                                </a>
-                                {% endif %}
-                            </div>
+                            {% endif %}
                         </div>
                         {% endfor %}
                     {% else %}
                         <div class="no-applicants-message">
                             <h3>No Student Profiles Available</h3>
-                            <p>There are currently no student profiles in the system. Check back later as students register and create their profiles.</p>
                         </div>
                     {% endif %}
                 </div>
@@ -158,7 +134,7 @@
     </div>
 </div>
 
-<!-- Modal for Applicant Profile -->
+<!-- Modal for Applicant -->
 <div id="applicant-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -166,32 +142,18 @@
             {% for student in students %}
             <div class="student-detail" id="student-{{ student.id }}" style="display: none;">
                 <h2>{{ student.name }}</h2>
-                <p class="student-roll">Roll Number: {{ student.college_roll }}</p>
+                <p>Roll Number: {{ student.college_roll }}</p>
                 {% if student.about %}
-                <div class="about-section">
-                    <h3>About</h3>
-                    <p>{{ student.about }}</p>
-                </div>
+                <p>About: {{ student.about }}</p>
                 {% endif %}
                 {% if student.skillset %}
-                <div class="skills-section">
-                    <h3>Skills</h3>
-                    <p>{{ student.skillset }}</p>
-                </div>
+                <p>Skills: {{ student.skillset }}</p>
                 {% endif %}
                 <div class="profile-links">
-                    {% if student.resume %}
-                    <a href="{{ student.resume }}" target="_blank" class="btn">View Resume</a>
-                    {% endif %}
-                    {% if student.github %}
-                    <a href="{{ student.github }}" target="_blank" class="btn">GitHub Profile</a>
-                    {% endif %}
-                    {% if student.linkedin %}
-                    <a href="{{ student.linkedin }}" target="_blank" class="btn">LinkedIn Profile</a>
-                    {% endif %}
-                    {% if student.portfolio %}
-                    <a href="{{ student.portfolio }}" target="_blank" class="btn">Portfolio</a>
-                    {% endif %}
+                    {% if student.resume %}<a href="{{ student.resume }}" target="_blank" class="btn">Resume</a>{% endif %}
+                    {% if student.github %}<a href="{{ student.github }}" target="_blank" class="btn">GitHub</a>{% endif %}
+                    {% if student.linkedin %}<a href="{{ student.linkedin }}" target="_blank" class="btn">LinkedIn</a>{% endif %}
+                    {% if student.portfolio %}<a href="{{ student.portfolio }}" target="_blank" class="btn">Portfolio</a>{% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -199,6 +161,6 @@
     </div>
 </div>
 
-<script src="../static/scripts/script_startup.js"></script>
+<script src="{{ url_for('static', filename='scripts/script_startup.js') }}"></script>
 </body>
 </html>

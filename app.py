@@ -4,6 +4,8 @@ from flask import request
 from flask import session
 from flask import redirect, url_for
 from Models import db, CompanyProfile, StudentProfile, JobListing, StudentListing, StudentAuth
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from flask import jsonify
 app=Flask(__name__,template_folder = 'templates',static_folder='static')
 
@@ -15,38 +17,46 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 #link database with Flask app
 db.init_app(app)
 
-@app.route('/STARTUP',methods = ["POST","GET"])
+@app.route('/STARTUP', methods=["POST", "GET"])
 def index():
     company_id = session.get('company_id')
     if not company_id:
-        return redirect(url_for('login'))
+        return redirect(url_for('login_company'))  # redirect to company login if not logged in
+
     company = CompanyProfile.query.get(company_id)
+    if not company:
+        session.clear()
+        return redirect(url_for('login_company'))
+
     if request.method == "GET":
-        # Fetch all job listings
-        job_listings = JobListing.query.all()
-        # Fetch all students
+        # Fetch jobs only for this company
+        job_listings = JobListing.query.filter_by(company_id=company.id).all()
         students = StudentProfile.query.all()
-        return render_template('index_startup.html', jobs=job_listings, students=students)
-    #handles job_posting
+        return render_template('index_startup.html', company=company, jobs=job_listings, students=students)
+
     elif request.method == "POST":
-        print("in db")
         title_ = request.form['jobType']
         stipend_ = request.form['stipend']
         describe = request.form['description']
         requirements_ = request.form['requirements']
-        jobtype=request.form['jobtype']
+        jobtype = request.form['jobtype']
 
+        # Make sure JobListing model has company_id column
         job = JobListing(
-            title = title_,
-            description = describe,
-            stipend = stipend_,
-            requirements = requirements_,
-            job_type = jobtype
+            title=title_,
+            description=describe,
+            stipend=stipend_,
+            requirements=requirements_,
+            job_type=jobtype,
+            company_id=company.id
         )
         db.session.add(job)
         db.session.commit()
-        print(job.title)
-        return render_template('index_startup.html',company=company)
+
+        job_listings = JobListing.query.filter_by(company_id=company.id).all()
+        students = StudentProfile.query.all()
+        return render_template('index_startup.html', company=company, jobs=job_listings, students=students)
+
 
 @app.route('/STUDENT')
 def index1():
@@ -125,79 +135,75 @@ def profile():
     return render_template('profile_student.html', profile=profile)
 
 
-@app.route('/', methods=['GET', 'POST'])
-def login():
+@app.route('/')
+def landing():
+    return render_template('landing.html')
+
+
+
+# ==========================
+# Student Login/Registration
+# ==========================
+@app.route('/login/student', methods=['GET', 'POST'])
+def login_student():
     if request.method == 'POST':
-        # LOGIN
-        if 'login-btn' in request.form:
-            # Student login
-            email = request.form.get('email')
-            password = request.form.get('password')
-            
-            # Company login
-            company_name = request.form.get('companyName')
-            company_password = request.form.get('companyPassword')
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-            if email and password:
-                student = StudentAuth.query.filter_by(email=email).first()
-                if student and student.password == password:
-                    session['student_id'] = student.id
-                    return redirect(url_for('index1'))
-                else:
-                    return render_template('index_login.html', error="Invalid student credentials")
+        if email and password:
+            student = StudentAuth.query.filter_by(email=email).first()
+            if student and student.password == password:
+                session['student_id'] = student.id
+                return redirect(url_for('index1'))  # Student dashboard
+            else:
+                return render_template('login_student.html', error="Invalid student credentials")
+        else:
+            return render_template('login_student.html', error="Please enter your login details")
 
-            if company_name and company_password:
-                company = CompanyProfile.query.filter_by(company_name=company_name).first()
-                if company and company.comp_password == company_password:
-                    session['company_id'] = company.id
-                    return redirect(url_for('/STARTUP'))
-                else:
-                    return render_template('index_login.html', error="Invalid company credentials")
+    return render_template('login_student.html')
 
-            return render_template('index_login.html', error="Please enter login details")
 
-        # REGISTRATION
-        elif 'register-btn' in request.form:
-            # Student registration
-            email = request.form.get('email')
-            password = request.form.get('password')
-            
-            # Company registration
-            company_name = request.form.get('companyName')
-            company_password = request.form.get('companyPassword')
-            company_description = request.form.get('companyDescription')
-            company_website = request.form.get('companyWebsite')
+# ==========================
+# Company Login/Registration
+# ==========================
+@app.route('/login/company', methods=['GET', 'POST'])
+def login_company():
+    if request.method == 'POST':
+        company_name = request.form.get('companyName')
+        company_password = request.form.get('companyPassword')
+        company_description = request.form.get('companyDescription')
+        company_website = request.form.get('companyWebsite')
+        register_mode = request.form.get('register')  # "0" or "1"
 
-            if email and password:
-                existing = StudentAuth.query.filter_by(email=email).first()
-                if existing:
-                    return render_template('index_login.html', error="Student already exists")
-                
-                new_student = StudentAuth(email=email, password=password)
-                db.session.add(new_student)
-                db.session.commit()
-                session['student_id'] = new_student.id
-                return redirect(url_for('index1'))
-
-            elif company_name and company_password:
-                existing = CompanyProfile.query.filter_by(company_name=company_name).first()
-                if existing:
-                    return render_template('index_login.html', error="Company already exists")
-                
-                new_company = CompanyProfile(
-                    company_name=company_name,
-                    comp_password=company_password,
-                    description=company_description,
-                    website=company_website
-                )
-                db.session.add(new_company)
-                db.session.commit()
-                session['company_id'] = new_company.id
+        # Login mode
+        if company_name and company_password and register_mode == "0":
+            company = CompanyProfile.query.filter_by(company_name=company_name).first()
+            if company and company.comp_password == company_password:
+                session['company_id'] = company.id
                 return redirect(url_for('index'))
+            else:
+                return render_template('login_company.html', error="Invalid company credentials")
 
-            return render_template('index_login.html', error="Please enter registration details")
+        # Registration mode
+        elif company_name and company_password and register_mode == "1":
+            existing = CompanyProfile.query.filter_by(company_name=company_name).first()
+            if existing:
+                return render_template('login_company.html', error="Company already exists")
 
-    return render_template('index_login.html')
+            new_company = CompanyProfile(
+                company_name=company_name,
+                comp_password=company_password,
+                description=company_description,
+                website=company_website
+            )
+            db.session.add(new_company)
+            db.session.commit()
+            session['company_id'] = new_company.id
+            return redirect(url_for('index'))
+
+    return render_template('login_company.html')
+
+
 
 
 
@@ -205,7 +211,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('landing'))
 
 if __name__== "__main__":
     with app.app_context():
