@@ -1,6 +1,13 @@
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 from Models import db, CompanyProfile, StudentProfile, JobListing, StudentListing, StudentAuth
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'static/uploads/resumes'
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
+
+
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -8,6 +15,10 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config["SECRET_KEY"] = "YOUR-SECRET-KEY"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///STARTIN_.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 db.init_app(app)
 
@@ -27,7 +38,17 @@ def index():
 
     if request.method == "GET":
         job_listings = JobListing.query.filter_by(company_id=company.id).all()
-        students = StudentProfile.query.all()
+
+        # ✅ Get student applications for this company's jobs
+        job_ids = [job.id for job in job_listings]
+        applications = StudentListing.query.join(StudentProfile).filter(
+            StudentListing.requirements.in_([job.title for job in job_listings])
+        ).all()
+
+        # Extract unique students
+        student_ids = {app.student_id for app in applications}
+        students = StudentProfile.query.filter(StudentProfile.id.in_(student_ids)).all()
+
         return render_template('index_startup.html', company=company, jobs=job_listings, students=students)
 
     elif request.method == "POST":
@@ -48,9 +69,8 @@ def index():
         db.session.add(job)
         db.session.commit()
 
-        job_listings = JobListing.query.filter_by(company_id=company.id).all()
-        students = StudentProfile.query.all()
-        return render_template('index_startup.html', company=company, jobs=job_listings, students=students)
+        return redirect(url_for('index'))
+
 
 # ==========================
 # Student Dashboard
@@ -102,7 +122,16 @@ def profile():
         github_ = request.form['github']
         linkedin_ = request.form['linkedin']
         portfolio_ = request.form['portfolio']
-        resume_ = request.form.get('resume')  # implement file upload later
+
+        # Handle resume file upload
+        resume_file = request.files.get('resume')
+        resume_path = profile.resume if profile else None  # keep existing if not uploading new
+        if resume_file and allowed_file(resume_file.filename):
+            filename = secure_filename(f"{student_id}_{resume_file.filename}")
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            resume_file.save(file_path)
+            resume_path = file_path.replace("static/", "/static/")  # path usable in HTML
 
         if profile:
             profile.name = name_
@@ -112,7 +141,7 @@ def profile():
             profile.github = github_
             profile.linkedin = linkedin_
             profile.portfolio = portfolio_
-            profile.resume = resume_
+            profile.resume = resume_path
         else:
             profile = StudentProfile(
                 student_id=student_id,
@@ -123,7 +152,7 @@ def profile():
                 github=github_,
                 linkedin=linkedin_,
                 portfolio=portfolio_,
-                resume=resume_
+                resume=resume_path
             )
             db.session.add(profile)
 

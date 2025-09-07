@@ -111,7 +111,7 @@
     <div id="applicants-page" class="page" style="display: none;">
         <div class="card">
             <div class="card-inner">
-                <h2>Student Profiles</h2>
+                <h2>Applicants</h2>
                 <div class="applicant-grid" id="applicants-list">
                     {% if students %}
                         {% for student in students %}
@@ -125,7 +125,7 @@
                         {% endfor %}
                     {% else %}
                         <div class="no-applicants-message">
-                            <h3>No Student Profiles Available</h3>
+                            <h3>No Applicants Yet</h3>
                         </div>
                     {% endif %}
                 </div>
@@ -149,6 +149,17 @@
                 {% if student.skillset %}
                 <p>Skills: {{ student.skillset }}</p>
                 {% endif %}
+                
+                <!-- ✅ Show which jobs this student applied for -->
+                <div class="applied-jobs">
+                    <h4>Applied For:</h4>
+                    <ul>
+                        {% for listing in student.listings %}
+                            <li>{{ listing.requirements }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
                 <div class="profile-links">
                     {% if student.resume %}<a href="{{ student.resume }}" target="_blank" class="btn">Resume</a>{% endif %}
                     {% if student.github %}<a href="{{ student.github }}" target="_blank" class="btn">GitHub</a>{% endif %}
