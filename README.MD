@@ -2,8 +2,6 @@
 
 STARTIN' is a web platform designed to connect students from SRM University with companies and startups. It provides a centralized hub where students can create professional profiles and apply for opportunities, and companies can post job listings and discover emerging talent.
 
-![STARTIN' Landing Page](https://i.imgur.com/your-image-url.png) ## ✨ Features
-
 The application offers a tailored experience for its two main user types: students and companies.
 
 ### 🎓 For Students
@@ -61,3 +59,4 @@ Once the application is running, open your web browser and navigate to http://12
 1.  From the landing page, select "SRM University" and then choose either the "Student" or "Company" role.
 2.  You can then create a new account or log in if you already have one.
 3.  Explore the dashboard and features tailored to your selected role.
+
